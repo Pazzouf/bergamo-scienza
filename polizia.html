@@ -175,24 +175,29 @@
 <footer>
 	<div class="rettangolo-sfumato"></div>
 </footer>
+<script src="quiz-config.js"></script>
 <script>
-  // Log dell'accesso sul foglio "Polizia"
-  (function () {
-    if (typeof SCRIPT_URL === "undefined" || !SCRIPT_URL) return;
+  console.log("polizia.html: script avviato");
+
+  if (typeof SCRIPT_URL === "undefined" || !SCRIPT_URL) {
+    console.error("SCRIPT_URL non trovato: quiz-config.js non caricato (controlla il percorso)");
+  } else {
     fetch(SCRIPT_URL, {
       method: "POST",
       mode: "no-cors",
-      keepalive: true,
       headers: { "Content-Type": "text/plain;charset=utf-8" },
       body: JSON.stringify({
         pagina: "polizia",
         timestamp: new Date().toISOString(),
         dispositivo: navigator.userAgent
       })
-    }).catch(function (e) { console.error(e); });
-  })();
+    }).then(function () {
+      console.log("polizia.html: richiesta inviata");
+    }).catch(function (e) {
+      console.error("polizia.html: invio fallito", e);
+    });
+  }
 
-  // Dopo 5 secondi torna a index.html passando ?skip=1
   setTimeout(function () {
     window.location.href = "index.html?skip=1";
   }, 5000);
