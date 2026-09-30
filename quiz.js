@@ -31,7 +31,6 @@
   /* Stato del quiz */
   const nDomande = dati.domande.length;
   const risposte = new Array(nDomande).fill(null);   // indice scelto per ogni domanda
-  let eta = dati.etaDefault;
   let inviato = false;
 
   /* Elementi della pagina */
