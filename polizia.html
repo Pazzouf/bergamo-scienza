@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="it"><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+	<meta charset="UTF-8">
+    <meta http-equiv="Content-Language" content="it">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+	<style>
+		body {
+            font-family: Georgia, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: ghostwhite;
+        }
+
+		header {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            position: relative;
+/*            margin-top: 40px; */
+        }
+
+		.rettangolo {
+			width: 100%;
+			z-index: 0;
+		}
+		
+		p {
+            font-family: Georgia, sans-serif;
+            font-size: 1rem;
+        }
+
+		.rettangolo:nth-child(1) {
+			height: 10px;
+			background-color: #ffffff; /* Colore del primo rettangolo */
+		}
+
+		.rettangolo:nth-child(2) {
+			height: 40px;
+			background-color: #00782a; /* Colore del secondo rettangolo */
+		}
+
+		.rettangolo:nth-child(3) {
+			height: 6px;
+			background-color: #ffffff; /* Colore del terzo rettangolo */
+		}
+
+		.rettangolo:nth-child(4) {
+			height: 10px;
+			background-color: #c95d0a; /* Colore del quarto rettangolo */
+		}
+
+		.rettangolo:nth-child(5) {
+			height: 10px;
+			background-color: #ffffff; /* Colore del quinto rettangolo */
+		}
+	
+        .rettangolo-sfumato {
+            height: 40px;
+            background: linear-gradient(to right, 
+                #846ff0 0%,
+                #846ff0 50%,
+                #ff4000 65%,
+                #ffffff 75%,
+                #ffffff 85%,
+                #00ff00 100%
+            );
+        }
+		.logo, .img-header {
+            position: absolute;
+            top: -20px;
+            margin: 30px;
+            z-index: 1;
+        }
+
+        .logo {
+            right: 0;
+            width: 50px;
+            height: auto;
+        }
+
+        .img-header {
+            left: 0;
+            width: 35px;
+            height: auto;
+            margin-top: 30px;
+        }
+		@media print {
+    body {
+        -webkit-print-color-adjust: exact; /* Per mantenere i colori originali */
+        background-image: url('img/scudetto 2023.jpg') !important;
+        background-repeat: no-repeat !important;
+        background-position: center !important;
+        background-size: cover !important;
+    }
+
+    .rettangolo {
+        display: block !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+    }
+}
+		@media (max-width: 768px) {
+			#Intestazione p {
+				font-size: 0.5rem; /* Dimensione del font generale per i paragrafi su dispositivi mobili */
+			}
+			#Intestazione #first-paragraph {
+				font-size: 1rem; /* Dimensione del font per il primo paragrafo (Ministero dell'Interno) su dispositivi mobili */
+			}
+		}
+		@media (min-width: 769px) {
+			#Intestazione p {
+				font-size: 1rem; /* Dimensione del font generale per i paragrafi su dispositivi desktop */
+			}
+			#Intestazione #first-paragraph {
+				font-size: 1.5rem; /* Dimensione del font per il primo paragrafo (Ministero dell'Interno) su dispositivi desktop */
+			}
+		}
+	</style>
+</head>
+<body>
+    <header>
+	<div class="rettangolo"></div>
+	<div class="rettangolo"></div>
+	<div class="rettangolo"></div>
+	<div class="rettangolo"></div>
+	<div class="rettangolo"></div>
+    <img src="https://www.armoriale.it/images/b/b9/Coa_fam_ITA_benaglia2.jpg" alt="Logo" class="logo">
+	<img src="https://thumb.wikimedia.org/wikipedia/commons/thumb/4/43/Flygvapnet_vapen_bra.svg/500px-Flygvapnet_vapen_bra.svg.png?utm_source=it.wikipedia.org&utm_campaign=imageinfo&utm_content=thumbnail" alt="img-header" class="img-header">
+</header>
+<table border="0" align="center">
+	<tbody>
+		<tr>
+			<td width="75%" height="75%" align="center" valign="top">
+                <div id="Intestazione" style="text-align: center;">
+					<table align="center" border="0" width="43" height="47">
+						<tbody>
+							<tr>
+								<td style="vertical-align: bottom;">
+									<img border="0" src="image.psd.png" alt="Stemma Repubblica Italiana" width="43" height="47">
+								</td>
+							</tr>
+						</tbody>
+					</table>
+                </div>
+				<br>
+				<table border="0" width="100%" style="background-image: linear-gradient(rgba(248, 248, 255, 0.8), rgba(248, 248, 255, 0.8)), url('img/scudetto 2023.jpg'); background-repeat: no-repeat; background-position: center; background-size:contain;">
+					<tbody>
+						<tr>
+							<td>
+								<p align="center"><span style="font-style: italic; font-size:2rem; color:#FF0000;"><span>Sito Sottoposto a Sequestro!</span></span></p>
+							</td>
+						</tr>
+						<tr>
+							<td align="center">
+								<p>Si comunica che la presente pagina web ed i relativi contenuti sono stati sottoposti a Sequestro Giudiziario Tecnico ai sensi dell'art. 321 c.p.p. </p>
+								<p style="text-decoration: underline;">Nessun dato relativo al tuo ip address od altra traccia utile ad identificarti verrà registrato.</p>
+								<p>L'accesso alla risorsa è stato inibito per violazione delle normative vigenti sul trattamento dei dati e della sicurezza informatica. </p>
+                                <p>PROC. PENALE N. 4082/2026 R.G.N.R. — DECRETO N. 8821 </p>
+
+								<hr style="width: 150px;">
+
+								<p>Please note that this web page and its contents have been subject to a Technical Judicial Seizure pursuant to Article 321 of the Code of Criminal Procedure. </p>
+                                <p style="text-decoration: underline;">No data relating to your IP address or any other information that could be used to identify you will be recorded.</p>
+								<p>Access to this resource has been blocked due to a breach of current regulations on data processing and IT security. </p>
+                                <p>CRIMINAL CASE NO. 4082/2026 R.G.N.R. — ORDER NO. 8821 </p>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</td></tr></tbody>
+	</table>
+<br>
+<footer>
+	<div class="rettangolo-sfumato"></div>
+</footer>
+
+</body></html>
