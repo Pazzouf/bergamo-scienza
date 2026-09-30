@@ -176,12 +176,7 @@
 	<div class="rettangolo-sfumato"></div>
 </footer>
 <script>
-    // Il timer parte subito all'apertura della pagina:
-    // dopo 5 secondi rimanda a index.html passando ?skip=1
-    setTimeout(function() {
-      window.location.href = "index.html?skip=1";
-    }, 5000);
-	(function () {
+    function () {
       if (typeof SCRIPT_URL === "undefined" || !SCRIPT_URL) return;
       fetch(SCRIPT_URL, {
         method: "POST",
@@ -195,5 +190,11 @@
         })
       }).catch(function (e) { console.error(e); });
     })();
+	// Il timer pa(rte subito all'apertura della pagina:
+    // dopo 5 secondi rimanda a index.html passando ?skip=1
+    setTimeout(function() {
+      window.location.href = "index.html?skip=1";
+    }, 5000);
+	
   </script>
 </body></html>
