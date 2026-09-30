@@ -60,47 +60,14 @@
 </body>
   <script>
     const giaVisto = sessionStorage.getItem("scherzoVisto");
-    const percentualeProbabilita = 0.3; // 30% di probabilità
-    const probabileScherzo = Math.random() < percentualeProbabilita;
-
     const urlParams = new URLSearchParams(window.location.search);
     const staRitornando = urlParams.get('skip') === '1';
+    const forza = urlParams.get('forza') === '1';
+    const probabileScherzo = forza || Math.random() < 0.3;
 
-    function vaiAllaPolizia() {
-      window.location.href = "polizia.html";
-    }
-
-    if (probabileScherzo && !giaVisto && !staRitornando) {
+    if (probabileScherzo && (!giaVisto || forza) && !staRitornando) {
       sessionStorage.setItem("scherzoVisto", "true");
-
-      const payload = {
-        pagina: "polizia",
-        evento: "accesso",
-        timestamp: new Date().toISOString(),
-        dispositivo: navigator.userAgent
-      };
-
-      let reindirizzato = false;
-      function vai() {
-        if (reindirizzato) return;
-        reindirizzato = true;
-        vaiAllaPolizia();
-      }
-
-      // Se l'invio è lento, reindirizza comunque dopo 1,5 secondi
-      setTimeout(vai, 1500);
-
-      if (typeof SCRIPT_URL !== "undefined" && SCRIPT_URL) {
-        fetch(SCRIPT_URL, {
-          method: "POST",
-          mode: "no-cors",
-          keepalive: true,
-          headers: { "Content-Type": "text/plain;charset=utf-8" },
-          body: JSON.stringify(payload)
-        }).then(vai).catch(vai);
-      } else {
-        vai();
-      }
+      window.location.href = "polizia.html";
     } else {
       document.getElementById("home").style.display = "flex";
     }
