@@ -16,9 +16,6 @@
     return;
   }
 
-  /* Colori del progetto usati a rotazione, uno per domanda.
-     "on"  = colore del testo SOPRA il colore pieno (leggibile)
-     "ink" = colore-accento usato come testo su sfondo chiaro         */
   const ACCENTI = [
     { c: "#73D2DE", soft: "#e7f6f8", on: "#0f4a50", ink: "#17646c" }, // azzurro
     { c: "#D81159", soft: "#fbe4ec", on: "#ffffff", ink: "#b30e4a" }, // magenta
@@ -59,37 +56,13 @@
     card.style.setProperty("--accent-ink", a.ink);
   }
 
-  /* Slide 0: età */
-  function creaSlideEta() {
-    const item = document.createElement("div");
-    item.className = "carousel-item active";
-    const card = document.createElement("div");
-    card.className = "quiz-card";
-    applicaAccentoCard(card, 0);
-
-    card.innerHTML =
-      '<div class="q-emoji">🎂</div>' +
-      '<div class="q-text">Quanti anni hai?</div>' +
-      '<div class="age-wrap">' +
-        '<div class="age-stepper">' +
-          '<button type="button" class="age-btn" id="ageMinus" aria-label="Diminuisci età">−</button>' +
-          '<div class="age-value" id="ageValue" aria-live="polite">' + eta + '</div>' +
-          '<button type="button" class="age-btn" id="agePlus" aria-label="Aumenta età">+</button>' +
-        '</div>' +
-        '<div class="age-unit">anni</div>' +
-      '</div>';
-
-    item.appendChild(card);
-    inner.appendChild(item);
-  }
-
-  /* Slide di una domanda */
+  /* Slide di una domanda (la prima è quella attiva) */
   function creaSlideDomanda(d, idx) {
     const item = document.createElement("div");
-    item.className = "carousel-item";
+    item.className = "carousel-item" + (idx === 0 ? " active" : "");
     const card = document.createElement("div");
     card.className = "quiz-card";
-    applicaAccentoCard(card, idx + 1);
+    applicaAccentoCard(card, idx);
 
     let html = "";
     if (d.emoji) html += '<div class="q-emoji">' + d.emoji + "</div>";
@@ -112,7 +85,6 @@
     inner.appendChild(item);
   }
 
-  creaSlideEta();
   dati.domande.forEach(creaSlideDomanda);
 
   /* ---------- Carosello Bootstrap (scorrimento + swipe) ---------- */
@@ -123,7 +95,7 @@
     touch: true
   });
 
-  const ultimaSlide = nDomande;   // 0 = età, poi 1..nDomande
+  const ultimaSlide = nDomande - 1;   // slide 0..nDomande-1
 
   /* ---------- Interazioni ---------- */
 
@@ -135,32 +107,11 @@
     const j = parseInt(opt.dataset.opzione, 10);
     risposte[d] = j;
 
-    /* aggiorna lo stato visivo delle opzioni della stessa domanda */
     const gruppo = opt.parentElement.querySelectorAll(".option");
     gruppo.forEach(function (o) { o.classList.remove("selected"); });
     opt.classList.add("selected");
     nascondiHint();
   });
-
-  /* Stepper età (delegato perché creato dinamicamente) */
-  inner.addEventListener("click", function (e) {
-    if (inviato) return;
-    if (e.target.id === "agePlus")  cambiaEta(1);
-    if (e.target.id === "ageMinus") cambiaEta(-1);
-  });
-
-  function cambiaEta(delta) {
-    eta = Math.min(dati.etaMax, Math.max(dati.etaMin, eta + delta));
-    const v = document.getElementById("ageValue");
-    if (v) v.textContent = eta;
-    aggiornaStepper();
-  }
-  function aggiornaStepper() {
-    const meno = document.getElementById("ageMinus");
-    const piu  = document.getElementById("agePlus");
-    if (meno) meno.disabled = eta <= dati.etaMin;
-    if (piu)  piu.disabled  = eta >= dati.etaMax;
-  }
 
   /* Navigazione */
   btnPrev.addEventListener("click", function () { carosello.prev(); });
@@ -198,20 +149,14 @@
     r.setProperty("--accent-ink", a.ink);
 
     /* progresso */
-    const perc = ((i + 1) / (ultimaSlide + 1)) * 100;
-    barra.style.width = perc + "%";
-    if (i === 0) {
-      infoProg.textContent = "Iniziamo!";
-    } else {
-      infoProg.textContent = "Domanda " + i + " di " + nDomande;
-    }
+    barra.style.width = (((i + 1) / nDomande) * 100) + "%";
+    infoProg.textContent = "Domanda " + (i + 1) + " di " + nDomande;
 
     /* pulsanti */
     btnPrev.classList.toggle("hidden", i === 0);
     const inFondo = (i === ultimaSlide);
     btnNext.classList.toggle("hidden", inFondo);
     btnSubmit.classList.toggle("hidden", !inFondo);
-    if (i === 0) aggiornaStepper();
   }
 
   /* ---------- Invio ---------- */
@@ -226,12 +171,11 @@
     const mancante = primaSenzaRisposta();
     if (mancante !== -1) {
       mostraHint("Rispondi a tutte le domande prima di inviare 🙂");
-      carosello.to(mancante + 1);   // porta alla prima domanda senza risposta
+      carosello.to(mancante);   // porta alla prima domanda senza risposta
       return;
     }
     inviato = true;
 
-    /* punteggio + dettaglio risposte */
     let punteggio = 0;
     const dettaglio = dati.domande.map(function (d, i) {
       const scelto = risposte[i];
@@ -248,7 +192,6 @@
 
     const payload = {
       quiz: tipo,
-      eta: eta,
       timestamp: new Date().toISOString(),
       punteggio: punteggio,
       totale: nDomande,
@@ -259,10 +202,7 @@
     inviaDati(payload);
   }
 
-  /* Invio al Google Apps Script.
-     Usiamo mode:'no-cors' + text/plain: è il metodo affidabile per
-     scrivere su Apps Script da un sito statico (GitHub Pages), senza
-     errori di CORS. La risposta non è leggibile, ma i dati vengono salvati. */
+  /* Invio al Google Apps Script (no-cors + text/plain). */
   function inviaDati(payload) {
     if (!SCRIPT_URL) {
       console.warn("SCRIPT_URL vuoto: dati NON inviati. Payload:", payload);
@@ -303,7 +243,6 @@
     item.appendChild(card);
     inner.appendChild(item);
 
-    /* blocca la navigazione e vai alla schermata finale */
     btnPrev.classList.add("hidden");
     btnNext.classList.add("hidden");
     btnSubmit.classList.add("hidden");
