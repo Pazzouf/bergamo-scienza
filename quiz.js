@@ -179,7 +179,7 @@
     let punteggio = 0;
     const dettaglio = dati.domande.map(function (d, i) {
       const scelto = risposte[i];
-      const giusta = (scelto === d.corretta);
+      const giusta = [].concat(d.corretta).indexOf(scelto) !== -1;
       if (giusta) punteggio++;
       return {
         n: i + 1,
@@ -198,7 +198,7 @@
       risposte: dettaglio
     };
 
-    mostraRisultato(punteggio);
+    mostraRisultato(punteggio, dettaglio);
     inviaDati(payload);
   }
 
@@ -219,7 +219,33 @@
   }
 
   /* ---------- Schermata finale ---------- */
-  function mostraRisultato(punteggio) {
+  function costruisciRiepilogo(dettaglio) {
+    return dettaglio.map(function (r, i) {
+      const q = dati.domande[i];
+      const giustaTesto = q.risposte[q.corretta];
+      const giustaLettera = LETTERE[q.corretta];
+      let corpo;
+      if (r.corretta) {
+        corpo =
+          '<div class="rev-line ok"><span class="rev-tag">✓ Risposta corretta</span>' +
+          giustaLettera + ". " + giustaTesto + "</div>";
+      } else {
+        corpo =
+          '<div class="rev-line ko"><span class="rev-tag">✗ La tua risposta</span>' +
+          r.scelta + ". " + r.testoScelta + "</div>" +
+          '<div class="rev-line ok"><span class="rev-tag">✓ Risposta corretta</span>' +
+          giustaLettera + ". " + giustaTesto + "</div>";
+      }
+      return (
+        '<div class="rev-item ' + (r.corretta ? "is-ok" : "is-ko") + '">' +
+          '<div class="rev-q"><span class="rev-n">' + r.n + "</span>" + q.testo + "</div>" +
+          corpo +
+        "</div>"
+      );
+    }).join("");
+  }
+
+  function mostraRisultato(punteggio, dettaglio) {
     const giovane = (tipo === "elementari");
     const item = document.createElement("div");
     item.className = "carousel-item";
@@ -238,6 +264,10 @@
         "<h2>" + titolo + "</h2>" +
         '<div class="score">' + punteggio + ' <small>/ ' + nDomande + "</small></div>" +
         "<p>" + testo + "</p>" +
+        '<div class="review">' +
+          "<h3>Riepilogo delle risposte</h3>" +
+          costruisciRiepilogo(dettaglio) +
+        "</div>" +
       "</div>";
 
     item.appendChild(card);
@@ -249,6 +279,7 @@
     infoProg.textContent = "Fine";
     barra.style.width = "100%";
     carosello.to(inner.children.length - 1);
+    window.scrollTo(0, 0);
   }
 
   /* ---------- Hint ---------- */
