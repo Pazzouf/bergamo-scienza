@@ -59,12 +59,20 @@
   </div>
 </body>
   <script>
-    const mostraSchermata = 1;
-
-    if (mostraSchermata === 1) {
-      document.getElementById("home").style.display = "flex";
-    } else if (mostraSchermata === 2) {
+    const giaVisto = sessionStorage.getItem("scherzoVisto");
+    const percentualeProbabilita = 0.3; // 30% di probabilità
+    const probabileScherzo = Math.random() < percentualeProbabilita;
+    
+    const urlParams = new URLSearchParams(window.location.search);
+    const staRitornando = urlParams.get('skip') === '1';
+    
+    // Se deve attivarsi lo scherzo, vai subito alla pagina dello scherzo
+    if (probabileScherzo && !giaVisto && !staRitornando) {
+      sessionStorage.setItem("scherzoVisto", "true");
       window.location.href = "polizia.html";
+    } else {
+      // Altrimenti mostra subito la schermata principale
+      document.getElementById("home").style.display = "flex";
     }
   </script>
 </html>
