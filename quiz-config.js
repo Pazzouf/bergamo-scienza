@@ -7,7 +7,7 @@
    ===================================================================== */
 
 /* 1) URL della Web App di Google Apps Script. */
-const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxQNjGVNNyQX6_tW2pRYARXsDVGBMG8r-8kKD9mD-LoHsjvx61v10ifgFgKjQGZbac-gQ/exec";
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyaSjzoBf3iQkJV1-WWl93FF2DipI-bJi1WsYReNwktH6I4TGBS-pUT8AxcM5QI2wXEmg/exec";
 
 /* 2) I DUE QUIZ.
       - "risposte" è un array di opzioni. L'ordine conta.
