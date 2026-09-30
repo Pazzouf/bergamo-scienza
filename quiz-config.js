@@ -6,16 +6,13 @@
    - le domande, le opzioni e la risposta corretta di ogni quiz
    ===================================================================== */
 
-/* 1) INCOLLA QUI l'URL della tua Web App di Google Apps Script.
-      Lo ottieni dopo il "Deploy" (vedi ISTRUZIONI.md).
-      Finché resta vuoto, il quiz funziona ma NON salva i dati.        */
+/* 1) URL della Web App di Google Apps Script. */
 const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxe_7ffogvIrP9VF8U26KB3ufvPBQ26Guv2LJDIiR-ZRVM21r2EDDb2H1mrn1ffhtvh2g/exec";
 
 /* 2) I DUE QUIZ.
       - "risposte" è un array di opzioni. L'ordine conta.
       - "corretta" è l'INDICE (0 = prima opzione, 1 = seconda, ...)
-        della risposta giusta. Ogni domanda ha UNA sola risposta giusta.
-      - Puoi cambiare testi, aggiungere/togliere opzioni liberamente.   */
+        della risposta giusta. Ogni domanda ha UNA sola risposta giusta. */
 
 const QUIZ = {
 
@@ -94,45 +91,23 @@ const QUIZ = {
     domande: [
       {
         emoji: "💭",
-        testo: "Che cosa sono le emozioni?",
+        testo: "Cosa sono le emozioni?",
         risposte: [
-          "Solo pensieri",
-          "Reazioni che proviamo davanti a situazioni diverse",
-          "Solo movimenti del corpo",
-          "Solo ricordi"
-        ],
-        corretta: 1
-      },
-      {
-        emoji: "🎵",
-        testo: "Possiamo provare emozioni anche ascoltando una canzone?",
-        risposte: [
-          "Sì",
-          "No, mai",
-          "Solo se abbiamo studiato musica",
-          "Solo quando siamo tristi"
-        ],
-        corretta: 0
-      },
-      {
-        emoji: "😢",
-        testo: "Perché una musica può farci sentire tristi?",
-        risposte: [
-          "Perché la musica può influenzare le nostre emozioni",
-          "Perché tutte le musiche sono tristi",
-          "Perché la musica fa sempre paura",
-          "Perché non possiamo capire la musica"
+          "Reazioni del cervello e del corpo che ci aiutano a rispondere a ciò che viviamo",
+          "Pensieri che controlliamo sempre volontariamente",
+          "Reazioni che coinvolgono soltanto il cuore",
+          "Sensazioni casuali che non hanno alcuna funzione"
         ],
         corretta: 0
       },
       {
         emoji: "🌍",
-        testo: "Tutte le persone esprimono le emozioni nello stesso modo?",
+        testo: "Tutte le persone esprimono le emozioni allo stesso modo?",
         risposte: [
-          "Sì, sempre",
-          "No, anche la cultura può influenzare il modo in cui esprimiamo le emozioni",
-          "Solo i bambini sono diversi",
-          "Solo gli adulti sono diversi"
+          "Sì, perché le emozioni sono uguali per tutti",
+          "No, ogni persona può esprimere e manifestare le emozioni in modo diverso",
+          "Sì, perché il cervello controlla le emozioni nello stesso modo in tutti",
+          "No, perché alcune persone non provano emozioni"
         ],
         corretta: 1
       },
@@ -140,25 +115,90 @@ const QUIZ = {
         emoji: "⚖️",
         testo: "Emozioni e ragione possono lavorare insieme?",
         risposte: [
-          "Sì",
-          "No",
-          "Solo nei bambini",
-          "Solo quando siamo felici"
+          "No, le emozioni impediscono sempre di ragionare",
+          "Sì, possono collaborare aiutandoci a prendere decisioni più consapevoli",
+          "No, quando proviamo emozioni non possiamo più pensare",
+          "Sì, ma solo quando siamo completamente privi di emozioni"
+        ],
+        corretta: 1
+      },
+      {
+        emoji: "🧠",
+        testo: "Quale parte del cervello è particolarmente importante per pianificare, controllare gli impulsi e valutare le conseguenze?",
+        risposte: [
+          "Corteccia prefrontale",
+          "Talamo",
+          "Ippocampo",
+          "Amigdala"
         ],
         corretta: 0
       },
       {
-        emoji: "🌱",
-        testo: "Possiamo imparare a gestire le nostre emozioni?",
+        emoji: "🔍",
+        testo: "Quali fattori possono influenzare il modo in cui viviamo un'emozione?",
         risposte: [
-          "Sì",
-          "No, mai",
-          "Solo la paura",
-          "Solo la felicità"
+          "Contesto della situazione",
+          "Interpretazione personale",
+          "Esperienze precedenti",
+          "Tutti i fattori indicati"
+        ],
+        corretta: 3
+      },
+      {
+        emoji: "😨",
+        testo: "Quando proviamo paura, perché il battito del cuore può aumentare?",
+        risposte: [
+          "Perché il cuore decide autonomamente di accelerare",
+          "Perché il sangue diventa improvvisamente più caldo",
+          "Perché il cervello attiva una risposta di allerta del corpo",
+          "Perché i polmoni comandano direttamente il cuore"
+        ],
+        corretta: 2
+      },
+      {
+        emoji: "⚡",
+        testo: "Quale parte del cervello è particolarmente coinvolta nella risposta alla paura?",
+        risposte: [
+          "Amigdala",
+          "Cervelletto",
+          "Midollo osseo",
+          "Nervo ottico"
+        ],
+        corretta: 0
+      },
+      {
+        emoji: "🫀",
+        testo: "Quale sistema permette al cervello di modificare automaticamente il battito cardiaco durante un'emozione?",
+        risposte: [
+          "Sistema tegumentario",
+          "Sistema scheletrico",
+          "Sistema nervoso autonomo",
+          "Sistema linfatico"
+        ],
+        corretta: 2
+      },
+      {
+        emoji: "🚨",
+        testo: "Quale sostanza è particolarmente importante nella risposta immediata del corpo a una situazione di pericolo?",
+        risposte: [
+          "Adrenalina",
+          "Melatonina",
+          "Citochina",
+          "Emoglobina"
+        ],
+        corretta: 0
+      },
+      {
+        emoji: "🔄",
+        testo: "Che cosa significa dire che cervello e cuore comunicano tra loro?",
+        risposte: [
+          "Il cervello può influenzare il cuore e ricevere informazioni dal corpo",
+          "Il cervello invia sangue direttamente al cuore",
+          "Il cuore pensa al posto del cervello",
+          "Il cuore controlla tutte le emozioni"
         ],
         corretta: 0
       }
     ]
   }
 };
- 
