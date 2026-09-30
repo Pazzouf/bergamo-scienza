@@ -9,7 +9,7 @@
 /* 1) INCOLLA QUI l'URL della tua Web App di Google Apps Script.
       Lo ottieni dopo il "Deploy" (vedi ISTRUZIONI.md).
       Finché resta vuoto, il quiz funziona ma NON salva i dati.        */
-const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwYu8sRyeOAHgBVRnLX6lKSn18hIAYRQtZUFQWBQr37f-6n1FXN_fcbpavBC1-XMxToXQ/exec";
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxe_7ffogvIrP9VF8U26KB3ufvPBQ26Guv2LJDIiR-ZRVM21r2EDDb2H1mrn1ffhtvh2g/exec";
 
 /* 2) I DUE QUIZ.
       - "risposte" è un array di opzioni. L'ordine conta.
@@ -23,9 +23,6 @@ const QUIZ = {
   elementari: {
     titolo: "Il Codice delle Emozioni",
     sottotitolo: "Un piccolo viaggio dentro le emozioni",
-    etaMin: 5,
-    etaMax: 13,
-    etaDefault: 9,
     domande: [
       {
         emoji: "💓",
@@ -94,9 +91,6 @@ const QUIZ = {
   superiori: {
     titolo: "Il Codice delle Emozioni",
     sottotitolo: "Emozioni, cervello e cultura",
-    etaMin: 14,
-    etaMax: 25,
-    etaDefault: 16,
     domande: [
       {
         emoji: "💭",
