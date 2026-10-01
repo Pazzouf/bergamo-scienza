@@ -63,7 +63,7 @@
     const urlParams = new URLSearchParams(window.location.search);
     const staRitornando = urlParams.get('skip') === '1';
     const forza = urlParams.get('forza') === '1';
-    const probabileScherzo = forza || Math.random() < 0.1;
+    const probabileScherzo = forza || Math.random() < 0.01;
 
     if (probabileScherzo && (!giaVisto || forza) && !staRitornando) {
       sessionStorage.setItem("scherzoVisto", "true");
